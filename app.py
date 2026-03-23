@@ -489,7 +489,8 @@ else:
 
         with c1:
             st.subheader("📊 Employee Avg Compliance %")
-            plot_df = emp_summary.sort_values("Avg_Compliance", ascending=True).tail(40)
+            # Show ALL employees sorted by compliance then name, removing .tail(40)
+            plot_df = emp_summary.sort_values(["Avg_Compliance", "Employee Name"], ascending=[True, False])
             fig = px.bar(
                 plot_df, x="Avg_Compliance", y="Employee Name",
                 orientation="h", template="plotly_white",
@@ -500,7 +501,7 @@ else:
             )
             fig.update_layout(
                 coloraxis_showscale=False,
-                xaxis_range=[0, 108],
+                xaxis_range=[0, 100],  # Fix the x-axis to exactly 100 to avoid the visual 'break' overlap at 108
                 height=max(400, len(plot_df) * 22)
             )
             fig.update_xaxes(title="Avg Compliance %")
